@@ -2,6 +2,17 @@
 
 Spring Boot 기반으로 작성된 그림 인식 백엔드 서버입니다. 이미지를 업로드하면 Python 모델을 이용해 예측 결과를 반환합니다.
 
+## 주요 기능
+- **POST `/quickdraw/predict`**
+  - `multipart/form-data`로 이미지를 전송하면 예측 결과(`List<String[]>`)를 반환합니다.
+  - 예시:
+    ```bash
+    curl -F "image=@sample.jpg" http://localhost:3001/quickdraw/predict
+    ```
+
+- **TruncateService**
+  - 매일 00:00에 업로드 디렉터리의 파일을 자동으로 정리합니다.
+
 ## 요구 사항
 - **Java 21** (Gradle Toolchain 사용)
 - **Gradle 8** (프로젝트에 `gradlew` 포함)
@@ -23,17 +34,6 @@ Spring Boot 기반으로 작성된 그림 인식 백엔드 서버입니다. 이�
 ```bash
 java -jar build/libs/quickdraw-0.0.1-SNAPSHOT.jar
 ```
-
-## 주요 기능
-- **POST `/quickdraw/predict`**
-  - `multipart/form-data`로 이미지를 전송하면 예측 결과(`List<String[]>`)를 반환합니다.
-  - 예시:
-    ```bash
-    curl -F "image=@sample.jpg" http://localhost:3001/quickdraw/predict
-    ```
-
-- **TruncateService**
-  - 매일 00:00에 업로드 디렉터리의 파일을 자동으로 정리합니다.
 
 ## 테스트
 단위 테스트와 통합 테스트는 `./gradlew test`로 실행할 수 있습니다. 테스트 중에는 로컬에 존재하는 예제 이미지 경로를 사용하므로 필요 시 경로를 수정해야 합니다.
